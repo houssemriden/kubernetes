@@ -16,10 +16,11 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 ## Master Node 
+```
 sed -i "s/cgroupDriver: systemd/cgroupDriver: cgroupfs/g" /var/lib/kubelet/config.yaml
 systemctl daemon-reload
 systemctl restart kubelet
-
+```
 Or By Creating  kubeadm-config.yaml
 ```
 # kubeadm-config.yaml
