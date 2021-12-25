@@ -34,6 +34,10 @@ apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: cgroupfs
 ```
 kubeadm init 
-
+```
+ mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 
