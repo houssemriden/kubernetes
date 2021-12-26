@@ -16,8 +16,8 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 ## Master Node 
-### Configure Container runtime 
-Docker 
+### Configure Container runtime Docker 
+
 ```
 sudo mkdir /etc/docker
 cat <<EOF | sudo tee /etc/docker/daemon.json
@@ -33,13 +33,14 @@ EOF
 sudo systemctl enable docker
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+```
 
 ```
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 The pod argument in case we're going to use calico
  mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
- 
+
  kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
 
 ```
