@@ -16,25 +16,26 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 ## Master Node 
+### Configure Container runtime 
+Docker 
 ```
-sed -i "s/cgroupDriver: systemd/cgroupDriver: cgroupfs/g" /var/lib/kubelet/config.yaml
-systemctl daemon-reload
-systemctl restart kubelet
-```
-Or By Creating  kubeadm-config.yaml
-```
-# kubeadm-config.yaml
-kind: ClusterConfiguration
-apiVersion: kubeadm.k8s.io/v1beta3
-kubernetesVersion: v1.22.0
----
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-#cgroupDriver: systemd
-cgroupDriver: cgroupfs
+sudo mkdir /etc/docker
+cat <<EOF | sudo tee /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}
+EOF
+sudo systemctl enable docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
 ```
 kubeadm init 
-```
  mkdir -p $HOME/.kube
   sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
   sudo chown $(id -u):$(id -g) $HOME/.kube/config
