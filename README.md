@@ -15,7 +15,7 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
-## Master Node 
+
 ### Configure Container runtime Docker 
 
 ```
@@ -33,7 +33,10 @@ EOF
 sudo systemctl enable docker
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+
 ```
+## Master Node 
+
 
 ```
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 The pod argument in case we're going to use calico
